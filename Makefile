@@ -10,6 +10,10 @@ check: ## Run code quality tools.
 	@uv lock --locked
 	@echo "🚀 Linting code: Running pre-commit"
 	@uv run pre-commit run -a
+	@echo "🚀 Linting code: Running Ruff"
+	@uv run ruff check
+	@echo "🚀 Linting code: Running WPS"
+	@uv run flake8 node8 --select=WPS
 	@echo "🚀 Static type checking: Running mypy"
 	@uv run mypy
 	@echo "🚀 Checking for obsolete dependencies: Running deptry"

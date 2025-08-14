@@ -1,0 +1,9 @@
+# [node8]
+# line_length = 100
+# ignores = [
+#     "N001"
+# ]
+# lines_show_before = 5
+# lines_show_after = 5
+# main_color = "yellow"
+# accent_color = "magenta"

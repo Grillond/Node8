@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvjfsy1qo1nji"]
+
+[ext_resource type="Texture2D" uid="uid://d04aeigorso2u" path="res://icon.svg" id="1_i0yj0"]
+[ext_resource type="Script" uid="uid://d3v4o8o3yfppo" path="res://scripts/shitty_node.gd" id="1_n7th6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hoqr7"]
+size = Vector2(239, 66)
+
+[node name="ShittyNode" type="CharacterBody2D"]
+script = ExtResource("1_n7th6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.93223804, 0.31002873, 0.488922, 1)
+scale = Vector2(1.8671875, 0.5078125)
+texture = ExtResource("1_i0yj0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hoqr7")
