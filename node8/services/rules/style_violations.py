@@ -25,13 +25,14 @@ FUNCTION_MISSING_DOCS_MESSAGE: Final[str] = (
     "Missing docstring in public function"
 )
 
+
 class LineTooLong:
     """E001 rule file parser."""
 
     def __init__(
-            self,
-            path: Path,
-            config: Config | None = None,
+        self,
+        path: Path,
+        config: Config | None = None,
     ) -> None:
         """Initialize LineTooLong class.
 
@@ -53,27 +54,29 @@ class LineTooLong:
             lines: list[str] = script.readlines()
         for index, line in enumerate(map(str.rstrip, lines), start=1):
             if len(line) > self.config.line_length:
-                self.errors.append(ScriptError(
-                    error=Error(
-                        codename=LINE_TOO_LONG_CODENAME,
-                        message=(
-                            f"{LINE_TOO_LONG_MESSAGE} " # noqa: WPS237
-                            f"({len(line)} > "
-                            f"{self.config.line_length})"
+                self.errors.append(
+                    ScriptError(
+                        error=Error(
+                            codename=LINE_TOO_LONG_CODENAME,
+                            message=(
+                                f"{LINE_TOO_LONG_MESSAGE} "  # noqa: WPS237
+                                f"({len(line)} > "
+                                f"{self.config.line_length})"
+                            ),
                         ),
+                        path=self.path,
+                        line=index,
+                        column=self.config.line_length,
+                        end_column=len(line) + 1,
                     ),
-                    path=self.path,
-                    line=index,
-                    column=self.config.line_length,
-                    end_column=len(line) + 1,
-                ))
+                )
         return self.errors
 
     @classmethod
     def check(
-            cls,
-            path: Path,
-            config: Config | None = None,
+        cls,
+        path: Path,
+        config: Config | None = None,
     ) -> list[ScriptError]:
         """Check given file for long lines without initializing class.
 
@@ -93,11 +96,11 @@ class FunctionMissingDocstring(Visitor):
 
     @classmethod
     def check(
-            cls,
-            path: Path,
-            tree: Tree[Any],
-            comment_tree: Tree[Any],
-            config: Config | None = None,
+        cls,
+        path: Path,
+        tree: Tree[Any],
+        comment_tree: Tree[Any],
+        config: Config | None = None,
     ) -> list[ScriptError]:
         """Visit given tree without initializing class.
 
@@ -141,13 +144,15 @@ class FunctionMissingDocstring(Visitor):
         if end_column is None:
             end_column = tree.meta.end_column
 
-        self.errors.append(ScriptError(
-            error=Error(
-                codename=FUNCTION_MISSING_DOCS_CODENAME,
-                message=FUNCTION_MISSING_DOCS_MESSAGE,
+        self.errors.append(
+            ScriptError(
+                error=Error(
+                    codename=FUNCTION_MISSING_DOCS_CODENAME,
+                    message=FUNCTION_MISSING_DOCS_MESSAGE,
+                ),
+                path=self.path,
+                line=tree.meta.line,
+                column=column,
+                end_column=end_column,
             ),
-            path=self.path,
-            line=tree.meta.line,
-            column=column,
-            end_column=end_column,
-        ))
+        )

@@ -9,3 +9,17 @@
 position = Vector2(-495, -298)
 
 [node name="ShittyNode" parent="." instance=ExtResource("2_lnu2h")]
+
+[node name="useless_node" type="Node2D" parent="."]
+
+[node name="poorlyNamed_node" type="Node2D" parent="useless_node"]
+
+[node name="Very" type="Node2D" parent="."]
+
+[node name="Deeply" type="Node2D" parent="Very"]
+
+[node name="Nested" type="Node2D" parent="Very/Deeply"]
+
+[node name="Node2D" type="Node2D" parent="Very/Deeply/Nested"]
+
+[node name="What" type="Node2D" parent="Very/Deeply/Nested/Node2D"]

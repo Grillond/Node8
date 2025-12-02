@@ -14,6 +14,8 @@ MAX_LINE_LENGTH: Final[int] = 80
 LINES_SHOW_BEFORE: Final[int] = 2
 LINES_SHOW_AFTER: Final[int] = 2
 
+MAX_SCENE_INDENT: Final[int] = 3
+
 MAIN_COLOR: Final[str] = "blue"
 ACCENT_COLOR: Final[str] = "red"
 
@@ -24,6 +26,8 @@ class Config(BaseModel):
     line_length: int = MAX_LINE_LENGTH
     lines_show_before: int = LINES_SHOW_BEFORE
     lines_show_after: int = LINES_SHOW_AFTER
+
+    max_scene_indent: int = MAX_SCENE_INDENT
 
     main_color: str = MAIN_COLOR
     accent_color: str = ACCENT_COLOR

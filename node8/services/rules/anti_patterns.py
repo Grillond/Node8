@@ -22,6 +22,7 @@ GET_NODE_FOUND_HELP: Final[str] = (
     "Replace with `@export` or unique names: `%Node2D`"
 )
 
+
 class GetNodeFound(Visitor):
     """N001 rule tree visitor."""
 
@@ -32,14 +33,16 @@ class GetNodeFound(Visitor):
         """
         if tree.children[0] != "get_node":
             return
-        self.errors.append(ScriptError(
-            error=Error(
-                codename=GET_NODE_FOUND_CODENAME,
-                message=GET_NODE_FOUND_MESSAGE,
-                help_message=GET_NODE_FOUND_HELP,
+        self.errors.append(
+            ScriptError(
+                error=Error(
+                    codename=GET_NODE_FOUND_CODENAME,
+                    message=GET_NODE_FOUND_MESSAGE,
+                    help_message=GET_NODE_FOUND_HELP,
+                ),
+                path=self.path,
+                line=tree.meta.line,
+                column=tree.meta.column,
+                end_column=tree.meta.end_column,
             ),
-            path=self.path,
-            line=tree.meta.line,
-            column=tree.meta.column,
-            end_column=tree.meta.end_column,
-        ))
+        )

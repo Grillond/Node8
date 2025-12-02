@@ -3,28 +3,32 @@
 import argparse
 from pathlib import Path
 
-from node8.services import gdscript
-
-
-def main(paths: list[str]) -> None:
-    """Run linter for given paths.
-
-    :param paths: Array of paths to check.
-    """
-    gdscript.check(paths)
+from node8.core.config import Config
+from node8.services import gdscript, scenes
+from node8.services.format import print_errors
 
 
 def check() -> None:
     """CLI entry point.
 
-    Accepts paths and runs main function.
+    Accepts paths and runs linter.
     """
     parser = _argparser_init()
     args = parser.parse_args()
-    paths = args.paths
-    if len(paths) <= 0:
-        paths.append(str(Path.cwd()))
-    main(paths)
+    path = Path(args.path)
+    config = Config.from_toml(path)
+
+    script_errors = gdscript.check(path, config=config)
+    script_errors.sort(key=lambda error: error.error.codename)
+
+    scene_errors = scenes.check(path, config=config)
+    scene_errors.sort(key=lambda error: error.error.codename)
+
+    print_errors(
+        script_errors=script_errors,
+        scene_errors=scene_errors,
+        config=config,
+    )
 
 
 def _argparser_init() -> argparse.ArgumentParser:
@@ -33,5 +37,10 @@ def _argparser_init() -> argparse.ArgumentParser:
     :returns: Initialized argparser.
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument("paths", type=str, default=[], nargs="*")
+    parser.add_argument(
+        "path",
+        type=str,
+        default=str(Path.cwd()),
+        nargs="?",
+    )
     return parser
